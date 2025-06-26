@@ -14,7 +14,7 @@ import { InMemoryGeneralDataSource } from 'src/external/dataSources/general/inMe
 import { FakePaymentDataSource } from 'src/external/dataSources/payment/fakePaymentDataSource';
 
 @Controller('product')
-export class AppController {
+export class ProductHttpController {
   dataSource: DataSource;
   productCoreController: ProductController;
 

@@ -1,8 +1,12 @@
+import { PaymentDatasourceDto } from 'src/common/dataSources/DTOs/paymentDatasource.dto';
 import { PaymentDataSource } from './paymentDataSource.interface';
 
 export class FakePaymentDataSource implements PaymentDataSource {
-  checkPaymentStatus(paymentId: string): Promise<boolean> {
-    // Simulate a payment status check
-    return Promise.resolve(paymentId === 'valid-payment-id');
+  getPayment(paymentId: string): Promise<PaymentDatasourceDto | null> {
+    return Promise.resolve({
+      id: paymentId,
+      paid: true,
+      paidAt: new Date(),
+    });
   }
 }
