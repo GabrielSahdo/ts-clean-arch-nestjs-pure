@@ -1,5 +1,13 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { DataSource } from 'src/common/dataSource.interface';
+import { ResourceNotFoundException } from 'src/common/exceptions/resourceNotFoundException';
 import { ProductController } from 'src/core/products/controllers/product.controller';
 import { InMemoryDataSource } from 'src/external/dataSources/inMemoryDataSource';
 
@@ -14,17 +22,31 @@ export class AppController {
   }
 
   @Get(':id')
-  getProduct(@Param('id') id: string) {
-    return this.productCoreController.getProduct(id);
+  async getProduct(@Param('id') id: string) {
+    const [err, res] = await this.productCoreController.getProduct(id);
+    if (err) {
+      if (err.code === ResourceNotFoundException.CODE) {
+        throw new NotFoundException(err.message);
+      }
+      throw new Error(`Unexpected error: ${err.message}`);
+    }
+
+    return res;
   }
 
   @Post()
-  createProduct(@Body() productInput: CreateProductInput) {
-    return this.productCoreController.createProduct({
+  async createProduct(@Body() productInput: CreateProductInput) {
+    const [err, res] = await this.productCoreController.createProduct({
       name: productInput.name,
       price: productInput.price,
       quantity: productInput.quantity,
     });
+
+    if (err) {
+      throw new Error(`Unexpected error: ${err.message}`);
+    }
+
+    return res;
   }
 }
 

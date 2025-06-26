@@ -1,3 +1,4 @@
+import { CoreResponse } from 'src/common/coreResponse';
 import { DataSource } from '../../../common/dataSource.interface';
 import { CreateProductInputDto } from '../DTOs/createProductInput.dto';
 import { ProductDto } from '../DTOs/product.dto';
@@ -11,21 +12,29 @@ export class ProductController {
 
   async createProduct(
     productInput: CreateProductInputDto,
-  ): Promise<ProductDto> {
+  ): Promise<CoreResponse<ProductDto>> {
     const gateway = new ProductGateway(this.dataSource);
     const useCase = new CreateProductUseCase(gateway);
 
-    const product = await useCase.execute(productInput);
+    const [err, product] = await useCase.execute(productInput);
 
-    return ProductPresenter.toDto(product);
+    if (err) {
+      return [err, undefined];
+    }
+
+    return [undefined, ProductPresenter.toDto(product)];
   }
 
-  async getProduct(productId: string): Promise<ProductDto> {
+  async getProduct(productId: string): Promise<CoreResponse<ProductDto>> {
     const gateway = new ProductGateway(this.dataSource);
     const useCase = new GetProductByIdUseCase(gateway);
 
-    const product = await useCase.execute(productId);
+    const [err, product] = await useCase.execute(productId);
 
-    return ProductPresenter.toDto(product);
+    if (err) {
+      return [err, undefined];
+    }
+
+    return [undefined, ProductPresenter.toDto(product)];
   }
 }

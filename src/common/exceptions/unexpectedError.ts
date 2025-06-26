@@ -1,13 +1,13 @@
 import { CoreException } from './coreException';
 
-export class NotFoundException extends CoreException {
-  static readonly CODE = 'NF404';
+export class UnexpectedError extends CoreException {
+  static readonly CODE = 'UNER';
 
   constructor(message: string) {
     super({
-      code: NotFoundException.CODE,
+      code: UnexpectedError.CODE,
       message,
-      shortMessage: 'Resource not found',
+      shortMessage: 'Unexpected error occurred',
     });
   }
 }
