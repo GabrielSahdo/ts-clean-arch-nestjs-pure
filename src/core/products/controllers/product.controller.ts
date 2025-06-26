@@ -17,10 +17,7 @@ export class ProductController {
     const useCase = new CreateProductUseCase(gateway);
 
     const [err, product] = await useCase.execute(productInput);
-
-    if (err) {
-      return [err, undefined];
-    }
+    if (err) return [err, undefined];
 
     return [undefined, ProductPresenter.toDto(product)];
   }
@@ -30,10 +27,7 @@ export class ProductController {
     const useCase = new GetProductByIdUseCase(gateway);
 
     const [err, product] = await useCase.execute(productId);
-
-    if (err) {
-      return [err, undefined];
-    }
+    if (err) return [err, undefined];
 
     return [undefined, ProductPresenter.toDto(product)];
   }

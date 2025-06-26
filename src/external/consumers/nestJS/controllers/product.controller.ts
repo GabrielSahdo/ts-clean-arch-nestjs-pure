@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  InternalServerErrorException,
   NotFoundException,
   Param,
   Post,
@@ -34,7 +35,8 @@ export class ProductHttpController {
       if (err.code === ResourceNotFoundException.CODE) {
         throw new NotFoundException(err.message);
       }
-      throw new Error(`Unexpected error: ${err.message}`);
+      console.error('Error getting product:', err);
+      throw new InternalServerErrorException();
     }
 
     return res;
@@ -49,7 +51,7 @@ export class ProductHttpController {
     });
 
     if (err) {
-      throw new Error(`Unexpected error: ${err.message}`);
+      throw new InternalServerErrorException();
     }
 
     return res;

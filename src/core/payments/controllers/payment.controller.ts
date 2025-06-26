@@ -13,10 +13,7 @@ export class PaymentController {
     const useCase = new GetPaymentUseCase(gateway);
 
     const [err, payment] = await useCase.execute(paymentId);
-
-    if (err) {
-      return [err, undefined];
-    }
+    if (err) return [err, undefined];
 
     return [undefined, PaymentPresenter.toDto(payment)];
   }

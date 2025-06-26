@@ -1,4 +1,6 @@
+import { ResourceInvalidException } from 'src/common/exceptions/resourceInvalidException';
 import { generateUUID } from '../../utils/generateUUID.utils';
+import { CoreResponse } from 'src/common/DTOs/coreResponse';
 
 export class Payment {
   id: string;
@@ -11,11 +13,31 @@ export class Payment {
     this.paidAt = paidAt;
   }
 
-  static create(): Payment {
-    return new Payment(generateUUID(), false, null);
+  validate() {
+    if (this.paid !== !!this.paid) {
+      throw new ResourceInvalidException('Payment `paid` invalid');
+    }
   }
 
-  static restore(id: string, paid: boolean, paidAt: Date | null): Payment {
-    return new Payment(id, paid, paidAt);
+  static create(): CoreResponse<Payment> {
+    try {
+      const payment = new Payment(generateUUID(), false, null);
+      return [undefined, payment];
+    } catch (error) {
+      return [error, undefined];
+    }
+  }
+
+  static restore(
+    id: string,
+    paid: boolean,
+    paidAt: Date | null,
+  ): CoreResponse<Payment> {
+    try {
+      const payment = new Payment(id, paid, paidAt);
+      return [undefined, payment];
+    } catch (error) {
+      return [error, undefined];
+    }
   }
 }

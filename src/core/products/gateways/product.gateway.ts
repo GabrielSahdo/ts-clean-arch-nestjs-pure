@@ -26,12 +26,10 @@ export class ProductGateway {
   async findById(productId: string): Promise<CoreResponse<Product | null>> {
     try {
       const productDTO = await this.dataSource.findProductById(productId);
+      if (!productDTO) return [undefined, null];
 
-      if (!productDTO) {
-        return [undefined, null];
-      }
-
-      const product = ProductMapper.toEntity(productDTO);
+      const [mapperErr, product] = ProductMapper.toEntity(productDTO);
+      if (mapperErr) return [mapperErr, undefined];
 
       return [undefined, product];
     } catch (error) {

@@ -11,11 +11,10 @@ export class PaymentGateway {
     try {
       const paymentDTO = await this.dataSource.getPayment(paymentId);
 
-      if (!paymentDTO) {
-        return [undefined, null];
-      }
+      if (!paymentDTO) return [undefined, null];
 
-      const payment = PaymentMapper.toEntity(paymentDTO);
+      const [mapperErr, payment] = PaymentMapper.toEntity(paymentDTO);
+      if (mapperErr) return [mapperErr, undefined];
 
       return [undefined, payment];
     } catch (error) {

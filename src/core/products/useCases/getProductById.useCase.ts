@@ -13,9 +13,7 @@ export class GetProductByIdUseCase {
     }
 
     const [error, product] = await this.gateway.findById(productId);
-    if (error) {
-      return [error, undefined];
-    }
+    if (error) return [error, undefined];
 
     if (!product) {
       return [

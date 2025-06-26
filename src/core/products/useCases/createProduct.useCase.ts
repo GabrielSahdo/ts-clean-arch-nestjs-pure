@@ -7,13 +7,15 @@ export class CreateProductUseCase {
   constructor(private productGateway: ProductGateway) {}
 
   async execute(dto: CreateProductInputDto): Promise<CoreResponse<Product>> {
-    const product = Product.create(dto.name, dto.price, dto.quantity);
+    const [errEntity, product] = Product.create(
+      dto.name,
+      dto.price,
+      dto.quantity,
+    );
+    if (errEntity) return [errEntity, undefined];
 
-    const [error] = await this.productGateway.create(product);
-
-    if (error) {
-      return [error, undefined];
-    }
+    const [errGateway] = await this.productGateway.create(product);
+    if (errGateway) return [errGateway, undefined];
 
     return [undefined, product];
   }

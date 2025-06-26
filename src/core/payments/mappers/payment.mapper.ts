@@ -1,5 +1,6 @@
 import { PaymentDatasourceDto } from 'src/common/dataSources/DTOs/paymentDatasource.dto';
 import { Payment } from '../entities/payment.entity';
+import { CoreResponse } from 'src/common/DTOs/coreResponse';
 
 export class PaymentMapper {
   static toDto(payment: Payment): PaymentDatasourceDto {
@@ -10,7 +11,7 @@ export class PaymentMapper {
     };
   }
 
-  static toEntity(dto: PaymentDatasourceDto): Payment {
+  static toEntity(dto: PaymentDatasourceDto): CoreResponse<Payment> {
     return Payment.restore(
       dto.id,
       dto.paid,

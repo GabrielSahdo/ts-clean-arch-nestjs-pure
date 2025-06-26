@@ -8,10 +8,7 @@ export class GetPaymentUseCase {
 
   async execute(paymentId: string): Promise<CoreResponse<Payment>> {
     const [error, payment] = await this.paymentGateway.getPayment(paymentId);
-
-    if (error) {
-      return [error, undefined];
-    }
+    if (error) return [error, undefined];
 
     if (!payment) {
       return [
