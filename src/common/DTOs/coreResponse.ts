@@ -1,3 +1,3 @@
-import { CoreException } from './exceptions/coreException';
+import { CoreException } from '../exceptions/coreException';
 
 export type CoreResponse<T> = [CoreException, undefined] | [undefined, T];

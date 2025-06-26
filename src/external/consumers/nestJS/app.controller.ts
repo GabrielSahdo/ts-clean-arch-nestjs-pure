@@ -6,10 +6,12 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
-import { DataSource } from 'src/common/dataSource.interface';
+import { DataSource } from 'src/common/dataSources/dataSource.interface';
 import { ResourceNotFoundException } from 'src/common/exceptions/resourceNotFoundException';
 import { ProductController } from 'src/core/products/controllers/product.controller';
-import { InMemoryDataSource } from 'src/external/dataSources/inMemoryDataSource';
+import { DataSourceProxy } from 'src/external/dataSources/dataSourceProxy';
+import { InMemoryGeneralDataSource } from 'src/external/dataSources/general/inMemoryGeneralDataSource';
+import { FakePaymentDataSource } from 'src/external/dataSources/payment/fakePaymentDataSource';
 
 @Controller('product')
 export class AppController {
@@ -17,7 +19,11 @@ export class AppController {
   productCoreController: ProductController;
 
   constructor() {
-    this.dataSource = new InMemoryDataSource();
+    this.dataSource = new DataSourceProxy(
+      new InMemoryGeneralDataSource(),
+      new FakePaymentDataSource(),
+    );
+
     this.productCoreController = new ProductController(this.dataSource);
   }
 

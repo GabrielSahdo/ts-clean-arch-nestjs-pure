@@ -1,5 +1,5 @@
-import { CoreResponse } from 'src/common/coreResponse';
-import { DataSource } from '../../../common/dataSource.interface';
+import { CoreResponse } from 'src/common/DTOs/coreResponse';
+import { DataSource } from '../../../common/dataSources/dataSource.interface';
 import { Product } from '../entities/product.entity';
 import { UnexpectedError } from 'src/common/exceptions/unexpectedError';
 

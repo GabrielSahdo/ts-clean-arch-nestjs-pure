@@ -1,4 +1,4 @@
-import { CoreResponse } from 'src/common/coreResponse';
+import { CoreResponse } from 'src/common/DTOs/coreResponse';
 import { CreateProductInputDto } from '../DTOs/createProductInput.dto';
 import { Product } from '../entities/product.entity';
 import { ProductGateway } from '../gateways/product.gateway';

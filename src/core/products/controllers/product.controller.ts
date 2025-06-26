@@ -1,5 +1,5 @@
-import { CoreResponse } from 'src/common/coreResponse';
-import { DataSource } from '../../../common/dataSource.interface';
+import { CoreResponse } from 'src/common/DTOs/coreResponse';
+import { DataSource } from '../../../common/dataSources/dataSource.interface';
 import { CreateProductInputDto } from '../DTOs/createProductInput.dto';
 import { ProductDto } from '../DTOs/product.dto';
 import { ProductGateway } from '../gateways/product.gateway';
