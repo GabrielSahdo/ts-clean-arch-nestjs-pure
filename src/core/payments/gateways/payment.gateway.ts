@@ -2,6 +2,7 @@ import { CoreResponse } from 'src/common/DTOs/coreResponse';
 import { DataSource } from '../../../common/dataSources/dataSource.interface';
 import { UnexpectedError } from 'src/common/exceptions/unexpectedError';
 import { Payment } from '../entities/payment.entity';
+import { PaymentMapper } from '../mappers/payment.mapper';
 
 export class PaymentGateway {
   constructor(private dataSource: DataSource) {}
@@ -14,11 +15,7 @@ export class PaymentGateway {
         return [undefined, null];
       }
 
-      const payment = Payment.restore(
-        paymentDTO.id,
-        paymentDTO.paid,
-        paymentDTO.paidAt,
-      );
+      const payment = PaymentMapper.toEntity(paymentDTO);
 
       return [undefined, payment];
     } catch (error) {

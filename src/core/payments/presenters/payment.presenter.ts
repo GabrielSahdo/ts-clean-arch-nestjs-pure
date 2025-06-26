@@ -6,7 +6,7 @@ export class PaymentPresenter {
     return {
       id: payment.id,
       paid: payment.paid,
-      paidAt: payment.paidAt,
+      paidAt: payment.paidAt ? payment.paidAt.toISOString() : null,
     };
   }
 }

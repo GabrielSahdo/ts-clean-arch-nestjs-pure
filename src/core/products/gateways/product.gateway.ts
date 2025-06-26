@@ -2,6 +2,7 @@ import { CoreResponse } from 'src/common/DTOs/coreResponse';
 import { DataSource } from '../../../common/dataSources/dataSource.interface';
 import { Product } from '../entities/product.entity';
 import { UnexpectedError } from 'src/common/exceptions/unexpectedError';
+import { ProductMapper } from '../mappers/product.mapper';
 
 export class ProductGateway {
   constructor(private dataSource: DataSource) {}
@@ -30,12 +31,7 @@ export class ProductGateway {
         return [undefined, null];
       }
 
-      const product = Product.restore(
-        productDTO.id,
-        productDTO.name,
-        productDTO.price,
-        productDTO.quantity,
-      );
+      const product = ProductMapper.toEntity(productDTO);
 
       return [undefined, product];
     } catch (error) {

@@ -1,5 +1,5 @@
 export interface PaymentDatasourceDto {
   id: string;
   paid: boolean;
-  paidAt: Date | null;
+  paidAt: string | null;
 }

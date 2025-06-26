@@ -6,7 +6,7 @@ export class FakePaymentDataSource implements PaymentDataSource {
     return Promise.resolve({
       id: paymentId,
       paid: true,
-      paidAt: new Date(),
+      paidAt: new Date().toISOString(),
     });
   }
 }

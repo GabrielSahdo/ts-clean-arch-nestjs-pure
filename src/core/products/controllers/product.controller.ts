@@ -3,7 +3,7 @@ import { DataSource } from '../../../common/dataSources/dataSource.interface';
 import { CreateProductInputDto } from '../DTOs/createProductInput.dto';
 import { ProductDto } from '../DTOs/product.dto';
 import { ProductGateway } from '../gateways/product.gateway';
-import { ProductPresenter } from '../presenters/product.presenters';
+import { ProductPresenter } from '../presenters/product.presenter';
 import { CreateProductUseCase } from '../useCases/createProduct.useCase';
 import { GetProductByIdUseCase } from '../useCases/getProductById.useCase';
 
